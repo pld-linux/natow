@@ -5,8 +5,6 @@ Version:	0.2.10
 Release:	2
 License:	GPL
 Group:		X11/Applications/Games
-Group(de):	X11/Applikationen/Spiele
-Group(pl):	X11/Aplikacje/Gry
 Source0:	http://download.sourceforge.net/natow/%{name}-%{version}.tar.gz
 Source1:	http://download.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
 Source2:	http://download.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
