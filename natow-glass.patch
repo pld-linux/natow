@@ -1,0 +1,219 @@
+--- natow-0.2.10/src/objects.h.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/objects.h	2004-04-01 22:15:01.000000000 +0000
+@@ -75,10 +75,10 @@
+ 
+ #ifdef USE_GLASS
+   /* The GLASS model for the object */
+-  GlassObject *model;
++  GlassModel *model;
+   int component;
+   /* The GLASS model when object is killed */
+-  GlassObject *model_dead;
++  GlassModel *model_dead;
+   int component_dead;
+ #endif
+ 
+--- natow-0.2.10/src/tank.h.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/tank.h	2004-04-01 22:17:01.000000000 +0000
+@@ -26,6 +26,7 @@
+ typedef struct _Tank Tank;
+ 
+ #include <glass.h>
++#include <stdio.h>
+ #include "world.h"
+ 
+ struct _Tank
+@@ -37,7 +38,7 @@
+ #ifdef USE_GLASS
+   /* The GLASS model for the tank */
+   GlassLibrary *library;
+-  GlassObject *texture_model, *model;
++  GlassModel *texture_model, *model;
+ 
+   /* The GLASS variables */
+   int heading, rot, rot_x, rot_y, rot_z, turret_heading, turret_pitch;
+@@ -86,7 +87,7 @@
+ void set_tank_model(Tank *tank, const char *fname);
+ 
+ /* Get the GLASS object used by the tank */
+-GlassObject *get_tank_model(Tank *tank);
++GlassModel *get_tank_model(Tank *tank);
+ #endif
+ 
+ /* Set a tanks mass */
+--- natow-0.2.10/src/player.c.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/player.c	2004-04-01 22:25:18.000000000 +0000
+@@ -627,7 +627,7 @@
+ void set_player_tank_variables(Player *player)
+ {
+   Tank *tank = player->tank;
+-  GlassObject *model = tank->model;
++  GlassModel *model = tank->model;
+ 
+   /* Rotate the tank, and its turret */
+   glassSetVariable(model, tank->heading, player->heading);
+@@ -1141,7 +1141,7 @@
+ {
+ #ifdef USE_GLASS
+   Tank *tank = player->tank;
+-  GlassObject *model = tank->model;
++  GlassModel *model = tank->model;
+   float *pos = player->pos;
+ 
+   draw_ai(player->ai);
+@@ -1178,7 +1178,7 @@
+   set_player_tank_variables(player);
+ 
+   /* Draw the tank */
+-  glassDrawObject(model);
++  glassDrawModel(model);
+ 
+   glPopMatrix();
+ 
+--- natow-0.2.10/src/tank.c.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/tank.c	2004-04-01 22:24:53.000000000 +0000
+@@ -164,11 +164,11 @@
+   /* If already has a texture model */
+   if(tank->texture_model)
+   {
+-    _glassLibraryRemoveObject(tank->library, tank->texture_model);
+-    glassFreeObject(tank->texture_model);
++    _glassLibraryRemoveModel(tank->library, tank->texture_model);
++    glassFreeModel(tank->texture_model);
+   }
+ 
+-  tank->texture_model = glassLibraryLoadObject(tank->library, fname);
++  tank->texture_model = glassLibraryLoadModel(tank->library, fname);
+ 
+   if(!tank->texture_model)
+     Neprintf("Error loading tank texture model: %s\n", fname);
+@@ -177,7 +177,7 @@
+ /* Set the GLASS object used by the tank */
+ void set_tank_model(Tank *tank, const char *fname)
+ {
+-  GlassObject *model;
++  GlassModel *model;
+   int valid_model = TRUE;
+ 
+   if(!tank || !fname)
+@@ -189,11 +189,11 @@
+   /* If already has a model */
+   if(tank->model)
+   {
+-    _glassLibraryRemoveObject(tank->library, tank->model);
+-    glassFreeObject(tank->model);
++    _glassLibraryRemoveModel(tank->library, tank->model);
++    glassFreeModel(tank->model);
+   }
+ 
+-  tank->model = model = glassLibraryLoadObject(tank->library, fname);
++  tank->model = model = glassLibraryLoadModel(tank->library, fname);
+ 
+   if(!model)
+   {
+@@ -248,9 +248,9 @@
+   {
+     Neprintf("Tank model file %s (%s), is not a valid tank model, removing.\n"
+ 	     "(see above for errors)\n",
+-	     fname, _glassObjectGetName(tank->model));
+-    _glassLibraryRemoveObject(tank->library, tank->model);
+-    glassFreeObject(tank->model);
++	     fname, _glassModelGetName(tank->model));
++    _glassLibraryRemoveModel(tank->library, tank->model);
++    glassFreeModel(tank->model);
+     tank->model = NULL;
+     tank->heading = -1;
+     tank->rot = -1;
+@@ -264,7 +264,7 @@
+ }
+ 
+ /* Get the GLASS object used by the tank */
+-GlassObject *get_tank_model(Tank *tank)
++GlassModel *get_tank_model(Tank *tank)
+ {
+   return tank->model;
+ }
+@@ -512,7 +512,7 @@
+ void draw_tank(Tank *tank)
+ {
+ #ifdef USE_GLASS
+-  GlassObject *model = tank->model;
++  GlassModel *model = tank->model;
+ 
+   if(!model)
+     return;
+@@ -525,7 +525,7 @@
+   glassSetVariable(model, tank->turret_pitch, -10.0);
+   glassSetVariable(model, tank->turret_heading, 0.0);
+ 
+-  glassDrawObject(tank->model);
++  glassDrawModel(tank->model);
+ #else
+ 
+   GLfloat white[4] = {1.0, 1.0, 1.0, 1.0};
+--- natow-0.2.10/src/draw.c.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/draw.c	2004-04-01 22:19:54.000000000 +0000
+@@ -359,7 +359,7 @@
+   glLoadIdentity();
+   glTranslatef(0.7 * 20.0 * view_x_ratio, -0.8 * 20.0 * view_y_ratio, -20.0);
+   set_player_tank_variables(current_player);
+-  glassDrawObject(current_player->tank->model);
++  glassDrawModel(current_player->tank->model);
+   glPopMatrix();
+ 
+   return TRUE;
+--- natow-0.2.10/src/objects.c.orig	2001-09-27 04:34:19.000000000 +0000
++++ natow-0.2.10/src/objects.c	2004-04-01 22:23:24.000000000 +0000
+@@ -145,7 +145,7 @@
+     }
+ 
+   /* get values */
+-  object->model = glassLoadObject(model);
++  object->model = glassLoadModel(model);
+   if (object->model == NULL)
+     {
+     Neprintf("  Cannot read model '%s' in object '%s'.\n", model, fname);
+@@ -153,7 +153,7 @@
+     return(NULL);
+     }
+   if (model_dead != NULL)
+-    object->model_dead = glassLoadObject(model_dead);
++    object->model_dead = glassLoadModel(model_dead);
+   if (name != NULL)
+     object->name = strdup(name);
+   if (mass > 0.)
+@@ -218,9 +218,9 @@
+     return;
+   Nfree(obj->name);
+   if (obj->model != NULL)
+-    glassFreeObject(obj->model);
++    glassFreeModel(obj->model);
+   if (obj->model_dead != NULL)
+-    glassFreeObject(obj->model);
++    glassFreeModel(obj->model);
+   Nfree(obj);
+ }
+ 
+@@ -455,18 +455,18 @@
+     if (object->model_dead != NULL)
+       {
+       if (object->component_dead >= 0)
+-	glassDrawComponent(object->model_dead, object->component_dead);
++	glassDrawSurface(object->model_dead, object->component_dead);
+       else
+-	glassDrawObject(object->model_dead);
++	glassDrawModel(object->model_dead);
+       }
+     }
+   else
+   if (object->state == OBJECT_ALIVE)
+     {
+     if (object->component >= 0)
+-      glassDrawComponent(object->model, object->component);
++      glassDrawSurface(object->model, object->component);
+     else
+-      glassDrawObject(object->model);
++      glassDrawModel(object->model);
+     }
+ 
+   glPopMatrix();
