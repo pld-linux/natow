@@ -59,13 +59,11 @@ rm -rf $RPM_BUILD_ROOT
 
 cp -R models $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-gzip -9nf README TODO Changelog
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README TODO Changelog
 %{_datadir}/%{name}
 %attr(755,root,root) %{_bindir}/*
