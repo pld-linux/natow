@@ -1,0 +1,54 @@
+diff -urN natow-0.2.10.orig/Makefile natow-0.2.10/Makefile
+--- natow-0.2.10.orig/Makefile	Thu Sep 27 06:34:19 2001
++++ natow-0.2.10/Makefile	Sat Nov 17 18:33:17 2001
+@@ -1,7 +1,7 @@
+ VERSION = 0.2.10
+ INSTALLDIR = /usr/local/games
+-NATOW=natow-$(VERSION)
+-NATOWSOLO=natow-solo-$(VERSION)
++NATOW=natow
++NATOWSOLO=natow-solo
+ TMPDIR=/tmp/natow-tmp
+ 
+ all:
+@@ -25,29 +25,21 @@
+ # prepare 'natow' place
+ 	mkdir -p $(INSTALLDIR)/bin
+ # prepare data place
+-	mkdir -p $(INSTALLDIR)/$(NATOW)
++	mkdir -p $(INSTALLDIR)/share/$(NATOW)
+ # copy natow binary
+ 	cp natow $(INSTALLDIR)/bin/$(NATOW)
+-	cp natow-solo $(INSTALLDIR)/bin/$(NATOWSOLO)
+ # copy data
+-	cp -r levels/ $(INSTALLDIR)/$(NATOW)/
+-	cp -r images/ $(INSTALLDIR)/$(NATOW)/
+-	cp munitions tanks usable $(INSTALLDIR)/$(NATOW)/
++	cp -r levels/ $(INSTALLDIR)/share/$(NATOW)/
++	cp -r images/ $(INSTALLDIR)/share/$(NATOW)/
++	cp munitions tanks usable $(INSTALLDIR)/share/$(NATOW)/
+ # remove unwanted files
+-	rm $(INSTALLDIR)/$(NATOW)/levels/Makefile
+-	rm $(INSTALLDIR)/$(NATOW)/images/Makefile
+-	rm -rf $(INSTALLDIR)/$(NATOW)/images/CVS/ $(INSTALLDIR)/$(NATOW)/images/fonts/CVS/ \
+-	       $(INSTALLDIR)/$(NATOW)/images/logos/CVS/ $(INSTALLDIR)/$(NATOW)/images/textures/CVS/
+-	rm -rf $(INSTALLDIR)/$(NATOW)/levels/CVS/ $(INSTALLDIR)/$(NATOW)/levels/maps/CVS/ \
+-	       $(INSTALLDIR)/$(NATOW)/levels/skys/CVS/ $(INSTALLDIR)/$(NATOW)/levels/snapshots/CVS/ \
+-	       $(INSTALLDIR)/$(NATOW)/levels/textures/CVS/
+-# create the script that will run natow
+-	printf "#!/bin/sh\n\n" >$(INSTALLDIR)/bin/natow
+-	printf "# script to start N.A.T.O.W.\n\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export INSTALLDIR=\"$(INSTALLDIR)\"\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(INSTALLDIR)/bin/natow
+-	cat NATOW_SCRIPT >>$(INSTALLDIR)/bin/natow
+-	chmod +x $(INSTALLDIR)/bin/natow
++	rm $(INSTALLDIR)/share/$(NATOW)/levels/Makefile
++	rm $(INSTALLDIR)/share/$(NATOW)/images/Makefile
++	rm -rf $(INSTALLDIR)/share/$(NATOW)/images/CVS/ $(INSTALLDIR)/share/$(NATOW)/images/fonts/CVS/ \
++	       $(INSTALLDIR)/share/$(NATOW)/images/logos/CVS/ $(INSTALLDIR)/share/$(NATOW)/images/textures/CVS/
++	rm -rf $(INSTALLDIR)/share/$(NATOW)/levels/CVS/ $(INSTALLDIR)/share/$(NATOW)/levels/maps/CVS/ \
++	       $(INSTALLDIR)/share/$(NATOW)/levels/skys/CVS/ $(INSTALLDIR)/share/$(NATOW)/levels/snapshots/CVS/ \
++	       $(INSTALLDIR)/share/$(NATOW)/levels/textures/CVS/
+ 
+ release:
+ # Clean out a previous release
