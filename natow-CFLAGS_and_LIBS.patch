@@ -1,0 +1,22 @@
+diff -Nru natow-0.2.10/src/Makefile natow-0.2.10-new/src/Makefile
+--- natow-0.2.10/src/Makefile	Thu Sep 27 06:34:19 2001
++++ natow-0.2.10-new/src/Makefile	Tue Nov 13 01:30:16 2001
+@@ -6,7 +6,7 @@
+ VERSION = 0.2.10
+ 
+ 
+-CFLAGS = -O3 -Wall -g -DUSE_GLASS -DNATOW_VERSION_STRING=\"$(VERSION)\"
++CFLAGS = -O3 -Wall -g -DUSE_GLASS -I/usr/X11R6/include/ -DNATOW_VERSION_STRING=\"$(VERSION)\"
+ 
+ OBJS = 2d.o \
+        about.o ai.o \
+@@ -30,9 +30,6 @@
+        world.o
+ 
+ LIBS = -lGL -lglut -lGLU -lm -L/usr/X11R6/lib -lXi -lXmu -lglass
+-# YP: to compile at my job
+-LIBS =  -L/usr/lib -lGL -lglut -lGLU \
+-	 -lm -L/usr/X11R6/lib -lXi -lXmu -L/home/yperret/tmp/lib -lglass
+ 
+ all: $(OBJS)
+ 	$(CC) $(CFLAGS) -o natow $(OBJS) $(LIBS)
