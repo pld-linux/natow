@@ -2,7 +2,7 @@ Summary:	N.A.T.O.W - nasty armoured tanks of war!
 Summary(pl):	N.A.T.O.W - paskudne opancerzone czo³gi wojenne!
 Name:		natow
 Version:	0.2.10
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Games
 Group(de):	X11/Applikationen/Spiele
@@ -11,9 +11,9 @@ Source0:	http://download.sourceforge.net/natow/%{name}-%{version}.tar.gz
 Source1:	http://download.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
 Source2:	http://download.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
 Source3:	http://download.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
-Patch0:		%{name}-install2.patch
+Patch0:		%{name}-install.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
-Patch2:		%{name}-script.patch
+Patch2:		%{name}-chdir.patch
 BuildRequires:	glass-devel
 BuildRequires:	glut-devel
 URL:		http://natow.sourceforge.net/
@@ -46,25 +46,20 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %build
 
 CC=%{__cc}
-CFLAGS="%{rpmcflags} -I/usr/include -I/usr/X11R6/include -DUSE_GLASS  -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
 LDFLAGS="-L%{libdir}"
 
-export CC CFLAGS LDFLAGS
+export CC LDFLAGS
 
-%{__make} -C src \
-	all
+%{__make} -C src RPM_OPT_FLAGS="%{rpmcflags}" all
 
 cp src/natow .
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-PREFIX=${RPM_BUILD_ROOT}; export PREFIX
+%{__make} INSTALLDIR="$RPM_BUILD_ROOT/%{_prefix}" install
 
-%{__make} \
-	install
-
-cp -r models/ $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -R models $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 gzip -9nf README TODO Changelog
 
@@ -74,5 +69,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,755)
 %doc *.gz
-%{_datadir}/%{name}/*
+%{_datadir}/%{name}
 %{_bindir}/*
