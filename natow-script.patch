@@ -1,9 +1,0 @@
-diff -Nru natow-0.2.10/NATOW_SCRIPT natow-0.2.10-new/NATOW_SCRIPT
---- natow-0.2.10/NATOW_SCRIPT	Thu Sep 27 06:34:19 2001
-+++ natow-0.2.10-new/NATOW_SCRIPT	Sat Nov 17 14:27:08 2001
-@@ -1,4 +1,4 @@
--cd $INSTALLDIR/$NATOW/ ; ../bin/$NATOW $*
-+cd $INSTALLDIR/natow/ ; bin/$NATOW $*
- 
- #
- # N.A.T.O.W starting script
