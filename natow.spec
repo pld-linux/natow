@@ -19,7 +19,6 @@ BuildRequires:	OpenGL-devel
 BuildRequires:	glass-devel
 BuildRequires:	glut-devel
 Requires:	OpenGL
-Requires:	glass
 URL:		http://natow.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -50,13 +49,21 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %patch3 -p1
 
 %build
-%{__make} all CC=%{__cc}
+%{__make} -C src all \
+	CC=%{__cc} \
+	CFLAGS="%{rpmcflags} -DUSE_GLASS -I%{_includedir} -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
+cp src/natow .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-export PREFIX=${RPM_BUILD_ROOT}
-%{__make} install
-cp -r models/ %{tmpdir}/%{name}-%{version}-root-%(id -u -n)%{_datadir}/games/%{name}-%{version}
+
+PREFIX=${RPM_BUILD_ROOT}; export PREFIX
+
+%{__make} \
+	install
+
+cp -r models/ $RPM_BUILD_ROOT%{_datadir}/games/%{name}-%{version}
+
 gzip -9nf README TODO Changelog COPYING
 
 %clean
@@ -64,7 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.gz TODO.gz Changelog.gz COPYING.gz
+%doc *.gz
 %attr(755,root,root) %{_datadir}/games/bin/*
 %{_datadir}/games/%{name}-%{version}/*
-%attr(755,root,root) %{_prefix}/bin/*
+%attr(755,root,root) %{_bindir}/*
