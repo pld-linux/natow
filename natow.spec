@@ -52,6 +52,8 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 	LIBS="-lGL -lglut -lGLU -lm -L/usr/X11R6/%{_lib} -lXi -lXmu -lglass"
 
 cp src/natow .
+# workaround to not relink on install
+touch src/all
 
 %install
 rm -rf $RPM_BUILD_ROOT
