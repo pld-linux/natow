@@ -11,7 +11,7 @@ Source0:	http://download.sourceforge.net/natow/%{name}-%{version}.tar.gz
 Source1:	http://download.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
 Source2:	http://download.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
 Source3:	http://download.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
-Patch0:		%{name}-install.patch
+Patch0:		%{name}-install2.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
 Patch2:		%{name}-script.patch
 BuildRequires:	glass-devel
@@ -44,9 +44,16 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %patch2 -p1
 
 %build
-%{__make} -C src all \
-	CC=%{__cc} \
-	CFLAGS="%{rpmcflags} -DUSE_GLASS -I/usr/include -I/usr/X11R6/include -I%{_includedir} -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
+
+CC=%{__cc}
+CFLAGS="%{rpmcflags} -I/usr/include -I/usr/X11R6/include -DUSE_GLASS  -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
+LDFLAGS="-L%{libdir}"
+
+export CC CFLAGS LDFLAGS
+
+%{__make} -C src \
+	all
+
 cp src/natow .
 
 %install
@@ -57,7 +64,7 @@ PREFIX=${RPM_BUILD_ROOT}; export PREFIX
 %{__make} \
 	install
 
-cp -r models/ $RPM_BUILD_ROOT%{_datadir}/games/%{name}-%{version}
+cp -r models/ $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 gzip -9nf README TODO Changelog COPYING
 
@@ -67,5 +74,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,755)
 %doc *.gz
-%{_datadir}/games/%{name}-%{version}/*
+%{_datadir}/%{name}/*
 %{_bindir}/*
