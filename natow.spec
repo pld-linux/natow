@@ -11,21 +11,17 @@ Source0:	http://download.sourceforge.net/natow/%{name}-%{version}.tar.gz
 Source1:	http://download.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
 Source2:	http://download.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
 Source3:	http://download.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
-Patch0:		%{name}-dirs.patch
-Patch1:		%{name}-PREFIX.patch
-Patch2:		%{name}-CFLAGS_and_LIBS.patch
-Patch3:		%{name}-solo.patch
-BuildRequires:	OpenGL-devel
+Patch0:		%{name}-install.patch
+Patch1:		%{name}-CFLAGS_and_LIBS.patch
+Patch2:		%{name}-script.patch
 BuildRequires:	glass-devel
-BuildRequires:	glut-devel
-Requires:	OpenGL
+Requires:	glass, glut
 URL:		http://natow.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define 	_noautoreqdep	libGL.so.1 libGLU.so.1
+%define 	_noautoreqdep	libGL.so.1 libGLU.so.1 libGLcore.so.1
 %define		_prefix		/usr/X11R6
 %define		_mandir		%{_prefix}/man
-%define		_datadir	/usr/share
 
 %description
 N.A.T.O.W is a 3D (openGL) tank game based loosely on scorched earth
@@ -46,12 +42,11 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__make} -C src all \
 	CC=%{__cc} \
-	CFLAGS="%{rpmcflags} -DUSE_GLASS -I%{_includedir} -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
+	CFLAGS="%{rpmcflags} -DUSE_GLASS -I/usr/include -I/usr/X11R6/include -I%{_includedir} -DNATOW_VERSION_STRING=\"\\\"%{version}\\\"\""
 cp src/natow .
 
 %install
@@ -70,8 +65,7 @@ gzip -9nf README TODO Changelog COPYING
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(644,root,root,755)
+%defattr(-,root,root,755)
 %doc *.gz
-%attr(755,root,root) %{_datadir}/games/bin/*
 %{_datadir}/games/%{name}-%{version}/*
-%attr(755,root,root) %{_bindir}/*
+%{_bindir}/*
