@@ -1,6 +1,6 @@
 diff -Nru natow-0.2.10/Makefile natow-0.2.10-new/Makefile
 --- natow-0.2.10/Makefile	Thu Sep 27 06:34:19 2001
-+++ natow-0.2.10-new/Makefile	Sat Nov 17 12:22:04 2001
++++ natow-0.2.10-new/Makefile	Sat Nov 17 14:11:35 2001
 @@ -1,6 +1,8 @@
  VERSION = 0.2.10
 -INSTALLDIR = /usr/local/games
@@ -47,7 +47,7 @@ diff -Nru natow-0.2.10/Makefile natow-0.2.10-new/Makefile
 +	printf "#!/bin/sh\n\n" >$(BINARKA)/bin/natow
 +	printf "# script to start N.A.T.O.W.\n\n" >>$(BINARKA)/bin/natow
 +	printf "export INSTALLDIR=\"/usr/X11R6/share/\"\n" >>$(BINARKA)/bin/natow
-+	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(BINARKA)/bin/natow
++	printf "export NATOW=\"$(NATOW)-$(VERSION)\"\n\n" >>$(BINARKA)/bin/natow
 +	cat NATOW_SCRIPT >>$(BINARKA)/bin/natow
 +	chmod +x $(BINARKA)/bin/natow
  
