@@ -1,0 +1,12 @@
+diff -Nru natow-0.2.10/Makefile natow-0.2.10-new/Makefile
+--- natow-0.2.10/Makefile	Wed Nov 14 01:22:34 2001
++++ natow-0.2.10-new/Makefile	Wed Nov 14 01:22:59 2001
+@@ -1,6 +1,6 @@
+ VERSION = 0.2.10
+-INSTALLDIR = /usr/share/games
+-BINARY_INSTALLDIR = /usr/X11R6/bin
++INSTALLDIR = $(PREFIX)/usr/share/games
++BINARY_INSTALLDIR = $(PREFIX)/usr/X11R6/bin
+ NATOW=natow-$(VERSION)
+ NATOWSOLO=natow-solo-$(VERSION)
+ TMPDIR=/tmp/natow-tmp
