@@ -66,7 +66,7 @@ PREFIX=${RPM_BUILD_ROOT}; export PREFIX
 
 cp -r models/ $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-gzip -9nf README TODO Changelog COPYING
+gzip -9nf README TODO Changelog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
