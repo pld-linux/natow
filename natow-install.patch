@@ -1,0 +1,52 @@
+diff -Nru natow-0.2.10/Makefile natow-0.2.10-new/Makefile
+--- natow-0.2.10/Makefile	Thu Sep 27 06:34:19 2001
++++ natow-0.2.10-new/Makefile	Thu Nov 15 18:51:20 2001
+@@ -1,5 +1,6 @@
+ VERSION = 0.2.10
+-INSTALLDIR = /usr/local/games
++INSTALLDIR = $(PREFIX)/usr/X11R6/share/games
++BINARKA = $(PREFIX)/usr/X11R6
+ NATOW=natow-$(VERSION)
+ NATOWSOLO=natow-solo-$(VERSION)
+ TMPDIR=/tmp/natow-tmp
+@@ -23,15 +24,16 @@
+ 
+ install: all
+ # prepare 'natow' place
+-	mkdir -p $(INSTALLDIR)/bin
++	mkdir -p $(INSTALLDIR)/$(NATOW)/bin
+ # prepare data place
+ 	mkdir -p $(INSTALLDIR)/$(NATOW)
+ # copy natow binary
+-	cp natow $(INSTALLDIR)/bin/$(NATOW)
+-	cp natow-solo $(INSTALLDIR)/bin/$(NATOWSOLO)
++	cp natow $(INSTALLDIR)/$(NATOW)/bin/$(NATOW)
++#	cp natow-solo $(INSTALLDIR)/bin/$(NATOWSOLO)
+ # copy data
+ 	cp -r levels/ $(INSTALLDIR)/$(NATOW)/
+ 	cp -r images/ $(INSTALLDIR)/$(NATOW)/
++	cp -r models/ $(INSTALLDIR)/$(NATOW)/
+ 	cp munitions tanks usable $(INSTALLDIR)/$(NATOW)/
+ # remove unwanted files
+ 	rm $(INSTALLDIR)/$(NATOW)/levels/Makefile
+@@ -42,12 +44,14 @@
+ 	       $(INSTALLDIR)/$(NATOW)/levels/skys/CVS/ $(INSTALLDIR)/$(NATOW)/levels/snapshots/CVS/ \
+ 	       $(INSTALLDIR)/$(NATOW)/levels/textures/CVS/
+ # create the script that will run natow
+-	printf "#!/bin/sh\n\n" >$(INSTALLDIR)/bin/natow
+-	printf "# script to start N.A.T.O.W.\n\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export INSTALLDIR=\"$(INSTALLDIR)\"\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(INSTALLDIR)/bin/natow
+-	cat NATOW_SCRIPT >>$(INSTALLDIR)/bin/natow
+-	chmod +x $(INSTALLDIR)/bin/natow
++	mkdir -p $(BINARKA)/bin/
++	touch $(BINARKA)/bin/natow
++	printf "#!/bin/sh\n\n" >$(BINARKA)/bin/natow
++	printf "# script to start N.A.T.O.W.\n\n" >>$(BINARKA)/bin/natow
++	printf "export INSTALLDIR=\"/usr/X11R6/share/games\"\n" >>$(BINARKA)/bin/natow
++	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(BINARKA)/bin/natow
++	cat NATOW_SCRIPT >>$(BINARKA)/bin/natow
++	chmod +x $(BINARKA)/bin/natow
+ 
+ release:
+ # Clean out a previous release
