@@ -1,0 +1,25 @@
+diff -urN natow-0.2.10.orig/src/main.c natow-0.2.10/src/main.c
+--- natow-0.2.10.orig/src/main.c	Thu Sep 27 06:34:19 2001
++++ natow-0.2.10/src/main.c	Sat Nov 17 18:15:52 2001
+@@ -21,6 +21,7 @@
+  */
+ 
+ #include <stdio.h>
++#include <unistd.h>
+ #include <string.h>
+ #include <time.h>
+ #include <GL/gl.h>
+@@ -188,6 +189,13 @@
+ {
+   World *world;
+ 
++  /* Go to the data directory */
++  if(chdir("/usr/X11R6/share/natow")) {
++    perror("chdir()");
++    puts("Can't enter data directory. Aborting.");
++    exit(1);
++  }
++
+   /* And there was light */
+   world = new_world();
+ 
