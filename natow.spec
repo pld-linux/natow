@@ -65,7 +65,7 @@ gzip -9nf README TODO Changelog
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root,755)
+%defattr(644,root,root,755)
 %doc *.gz
 %{_datadir}/%{name}
-%{_bindir}/*
+%attr(755,root,root) %{_bindir}/*
