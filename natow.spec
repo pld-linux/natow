@@ -5,13 +5,13 @@ Version:	0.2.10
 Release:	2
 License:	GPL
 Group:		X11/Applications/Games
-Source0:	http://download.sourceforge.net/natow/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/natow/%{name}-%{version}.tar.gz
 # Source0-md5:	5a7763969944f6f17a8fa03ea95afbf2
-Source1:	http://download.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
+Source1:	http://dl.sourceforge.net/natow/%{name}-images-0.2.5.tar.gz
 # Source1-md5:	6aebe8aff723d49a4e75a6c01affca93
-Source2:	http://download.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
+Source2:	http://dl.sourceforge.net/natow/%{name}-levels-0.2.5.tar.gz
 # Source2-md5:	51b1392a920bd86e57eaa5c95d680a36
-Source3:	http://download.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
+Source3:	http://dl.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
 # Source3-md5:	fc66d0e77eb8d4cb5c0c5e3b9077f4da
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
