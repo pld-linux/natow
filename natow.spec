@@ -2,7 +2,7 @@ Summary:	N.A.T.O.W - nasty armoured tanks of war!
 Summary(pl):	N.A.T.O.W - paskudne opancerzone czo³gi wojenne!
 Name:		natow
 Version:	0.2.10
-Release:	3
+Release:	4
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	http://dl.sourceforge.net/natow/%{name}-%{version}.tar.gz
