@@ -1,0 +1,31 @@
+diff -Nru natow-0.2.10/Makefile natow-0.2.10-new/Makefile
+--- natow-0.2.10/Makefile	Thu Sep 27 06:34:19 2001
++++ natow-0.2.10-new/Makefile	Wed Nov 14 01:31:06 2001
+@@ -1,5 +1,6 @@
+ VERSION = 0.2.10
+-INSTALLDIR = /usr/local/games
++INSTALLDIR = /usr/share/games
++BINARY_INSTALLDIR = /usr/X11R6/bin
+ NATOW=natow-$(VERSION)
+ NATOWSOLO=natow-solo-$(VERSION)
+ TMPDIR=/tmp/natow-tmp
+@@ -42,12 +43,13 @@
+ 	       $(INSTALLDIR)/$(NATOW)/levels/skys/CVS/ $(INSTALLDIR)/$(NATOW)/levels/snapshots/CVS/ \
+ 	       $(INSTALLDIR)/$(NATOW)/levels/textures/CVS/
+ # create the script that will run natow
+-	printf "#!/bin/sh\n\n" >$(INSTALLDIR)/bin/natow
+-	printf "# script to start N.A.T.O.W.\n\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export INSTALLDIR=\"$(INSTALLDIR)\"\n" >>$(INSTALLDIR)/bin/natow
+-	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(INSTALLDIR)/bin/natow
+-	cat NATOW_SCRIPT >>$(INSTALLDIR)/bin/natow
+-	chmod +x $(INSTALLDIR)/bin/natow
++	mkdir -p $(BINARY_INSTALLDIR)
++	printf "#!/bin/sh\n\n" >$(BINARY_INSTALLDIR)/natow
++	printf "# script to start N.A.T.O.W.\n\n" >>$(BINARY_INSTALLDIR)/natow
++	printf "export INSTALLDIR="/usr/share/games"\n" >>$(BINARY_INSTALLDIR)/natow
++	printf "export NATOW=\"$(NATOW)\"\n\n" >>$(BINARY_INSTALLDIR)/natow
++	cat NATOW_SCRIPT >>$(BINARY_INSTALLDIR)/natow
++	chmod +x $(BINARY_INSTALLDIR)/natow
+ 
+ release:
+ # Clean out a previous release
