@@ -2,7 +2,7 @@ Summary:	N.A.T.O.W - nasty armoured tanks of war!
 Summary(pl):	N.A.T.O.W - paskudne opancerzone czo³gi wojenne!
 Name:		natow
 Version:	0.2.10
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	http://dl.sourceforge.net/natow/%{name}-%{version}.tar.gz
@@ -16,8 +16,9 @@ Source3:	http://dl.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
 Patch2:		%{name}-chdir.patch
+Patch3:		%{name}-glass.patch
 URL:		http://natow.sourceforge.net/
-BuildRequires:	glass-devel
+BuildRequires:	glass-devel >= 1.3.1
 BuildRequires:	glut-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -42,14 +43,13 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-CC=%{__cc}
-LDFLAGS="-L%{libdir}"
-export CC LDFLAGS
-
 %{__make} all -C src \
-	RPM_OPT_FLAGS="%{rpmcflags}"
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -Wall -DUSE_GLASS -I/usr/X11R6/include -I/usr/include/glass -DNATOW_VERSION_STRING=\\\"\$(VERSION)\\\"" \
+	LIBS="-lGL -lglut -lGLU -lm -L/usr/X11R6/%{_lib} -lXi -lXmu -lglass"
 
 cp src/natow .
 
