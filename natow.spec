@@ -35,7 +35,7 @@ baby bunnies. (TODO shows, we have to wait for full playability)
 %description -l pl
 N.A.T.O.W to gra czo³gami bazuj±ca na scorched earth (tak¿e xscorch) w
 technologii 3D OpenGL. Celem jest niszczenie innych czo³gów i
-generalnie wszystkiego co siê rusza i nierusza. (TODO pokazuje, ¿e
+generalnie wszystkiego co siê rusza i nie rusza. (TODO pokazuje, ¿e
 jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 
 %prep
