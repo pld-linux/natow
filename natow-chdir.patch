@@ -14,7 +14,7 @@ diff -urN natow-0.2.10.orig/src/main.c natow-0.2.10/src/main.c
    World *world;
  
 +  /* Go to the data directory */
-+  if(chdir("/usr/X11R6/share/natow")) {
++  if(chdir("/usr/share/natow")) {
 +    perror("chdir()");
 +    puts("Can't enter data directory. Aborting.");
 +    exit(1);
