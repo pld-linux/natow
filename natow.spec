@@ -16,9 +16,9 @@ Source3:	http://dl.sourceforge.net/natow/%{name}-models-0.2.5.tar.gz
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
 Patch2:		%{name}-chdir.patch
+URL:		http://natow.sourceforge.net/
 BuildRequires:	glass-devel
 BuildRequires:	glut-devel
-URL:		http://natow.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define 	_noautoreqdep	libGL.so.1 libGLU.so.1 libGLcore.so.1
@@ -44,20 +44,20 @@ jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
 %patch2 -p1
 
 %build
-
 CC=%{__cc}
 LDFLAGS="-L%{libdir}"
-
 export CC LDFLAGS
 
-%{__make} -C src RPM_OPT_FLAGS="%{rpmcflags}" all
+%{__make} all -C src \
+	RPM_OPT_FLAGS="%{rpmcflags}"
 
 cp src/natow .
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} INSTALLDIR="$RPM_BUILD_ROOT/%{_prefix}" install
+%{__make} install \
+	INSTALLDIR=$RPM_BUILD_ROOT%{_prefix}
 
 cp -R models $RPM_BUILD_ROOT%{_datadir}/%{name}
 
@@ -67,5 +67,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README TODO Changelog
-%{_datadir}/%{name}
 %attr(755,root,root) %{_bindir}/*
+%{_datadir}/%{name}
