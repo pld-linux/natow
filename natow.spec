@@ -15,7 +15,7 @@ Patch0:		%{name}-install.patch
 Patch1:		%{name}-CFLAGS_and_LIBS.patch
 Patch2:		%{name}-script.patch
 BuildRequires:	glass-devel
-Requires:	glass, glut
+BuildRequires:	glut-devel
 URL:		http://natow.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
