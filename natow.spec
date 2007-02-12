@@ -1,5 +1,5 @@
 Summary:	N.A.T.O.W - nasty armoured tanks of war!
-Summary(pl):	N.A.T.O.W - paskudne opancerzone czo³gi wojenne!
+Summary(pl.UTF-8):   N.A.T.O.W - paskudne opancerzone czoÅ‚gi wojenne!
 Name:		natow
 Version:	0.2.10
 Release:	4
@@ -32,11 +32,11 @@ project goal is to add useless objects in that can be additionally
 destroyed, like buildings, alien artifacts and of course, defenseless
 baby bunnies. (TODO shows, we have to wait for full playability)
 
-%description -l pl
-N.A.T.O.W to gra czo³gami bazuj±ca na scorched earth (tak¿e xscorch) w
-technologii 3D OpenGL. Celem jest niszczenie innych czo³gów i
-generalnie wszystkiego co siê rusza i nie rusza. (TODO pokazuje, ¿e
-jeszcze trochê trzeba poczekaæ na maksymaln± grywalno¶æ)
+%description -l pl.UTF-8
+N.A.T.O.W to gra czoÅ‚gami bazujÄ…ca na scorched earth (takÅ¼e xscorch) w
+technologii 3D OpenGL. Celem jest niszczenie innych czoÅ‚gÃ³w i
+generalnie wszystkiego co siÄ™ rusza i nie rusza. (TODO pokazuje, Å¼e
+jeszcze trochÄ™ trzeba poczekaÄ‡ na maksymalnÄ… grywalnoÅ›Ä‡)
 
 %prep
 %setup -q -a 1 -a 2 -a 3
