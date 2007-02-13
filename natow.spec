@@ -1,5 +1,5 @@
 Summary:	N.A.T.O.W - nasty armoured tanks of war!
-Summary(pl.UTF-8):   N.A.T.O.W - paskudne opancerzone czołgi wojenne!
+Summary(pl.UTF-8):	N.A.T.O.W - paskudne opancerzone czołgi wojenne!
 Name:		natow
 Version:	0.2.10
 Release:	4
