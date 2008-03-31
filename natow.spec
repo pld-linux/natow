@@ -18,8 +18,8 @@ Patch1:		%{name}-CFLAGS_and_LIBS.patch
 Patch2:		%{name}-chdir.patch
 Patch3:		%{name}-glass.patch
 URL:		http://natow.sourceforge.net/
-BuildRequires:	glass-devel >= 1.3.1
 BuildRequires:	OpenGL-glut-devel
+BuildRequires:	glass-devel >= 1.3.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define 	_noautoreqdep	libGL.so.1 libGLU.so.1 libGLcore.so.1
@@ -48,8 +48,8 @@ jeszcze trochę trzeba poczekać na maksymalną grywalność)
 %build
 %{__make} all -C src \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -Wall -DUSE_GLASS -I/usr/X11R6/include -I/usr/include/glass -DNATOW_VERSION_STRING=\\\"\$(VERSION)\\\"" \
-	LIBS="-lGL -lglut -lGLU -lm -L/usr/X11R6/%{_lib} -lglass"
+	CFLAGS="%{rpmcflags} -Wall -DUSE_GLASS -I/usr/include/glass -DNATOW_VERSION_STRING=\\\"\$(VERSION)\\\"" \
+	LIBS="-lGL -lglut -lGLU -lm -lglass"
 
 cp src/natow .
 # workaround to not relink on install
